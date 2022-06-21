@@ -13,10 +13,16 @@ def game2
     puts "あなた:#{directions[my_direction]}"
     puts "相手：#{directions[enemy_direction]}"
     puts "----------------------"
-    if my_direction == enemy_direction
+    if ($result == "win") && (my_direction == enemy_direction)
       puts "win"
+      return false
+      
+    elsif ($result == "lose") && (my_direction == enemy_direction)
+      puts "lose"
+      return false
+      
     elsif my_direction != enemy_direction
-      game1
+      return true
     end
   else
     puts "0~3の数字のみを入力してください"
@@ -43,14 +49,16 @@ def game1
     
     #勝ち
     if (player == 0 && enemy == 1) || (player == 1 && enemy == 2) || (player == 2 && enemy == 0)
-      game2
+      $result = "win"
+      return false
     #負け
     elsif (player == 0 && enemy == 2) || (player == 1 && enemy == 0) || (player == 2 && enemy == 1)
-      puts "lose"
+      $result = "lose"
+      return false
     #あいこ
     elsif player == enemy
       puts "あいこで..."
-      game1
+      return true
     end
   elsif player == 3
     puts "終了"
@@ -62,4 +70,17 @@ def game1
   end
 end
 
-game1
+def main
+  if game1 == true
+    return true
+  elsif game2 == true
+    return true
+  else
+    return false
+  end
+end
+
+re_game = true
+while re_game
+  re_game = main
+end
